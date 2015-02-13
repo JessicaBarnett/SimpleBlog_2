@@ -3,3 +3,9 @@
 
 #ignore node modules
 /node_modules
+
+#ignore compiled handlebars templates
+/scripts/templates.js
+
+#ignore compiled css file
+/stylesheets/style.css
