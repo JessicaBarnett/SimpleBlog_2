@@ -18,7 +18,9 @@ var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
+// var morgan = require('morgan');
 var express = require('express');
+// var to5 = require('gulp-6to5');
 
 
 /**** Front-end Tasks ****/
@@ -51,32 +53,44 @@ gulp.task('express', function() {
   app.listen(4000);
 });
 
+// gulp.task('server', function() {
+//   // Start the server at the beginning of the task
+//   server.run({
+//       file: 'server.js'
+//   });
+//
+//   app.use(express.static(__dirname));
+//   app.listen(4000);
+// });
+
 /**** Watch tasks ****/
 
-// gulp.task('sassWatch', ['sass'], function() {
-//   gulp.watch('stylesheets/*.scss', ['sass']);
-// });
-//
-//
-// gulp.task('templateWatch', ['templates'], function() {
-//   gulp.watch('./templates/*.handlebars', ['templates']);
-// });
+gulp.task('sassWatch', ['sass'], function() {
+  gulp.watch('stylesheets/*.scss', ['sass']);
+      // .pipe(sass({errLogToConsole: true}));
+});
+
+
+gulp.task('templateWatch', ['templates'], function() {
+  gulp.watch('./templates/*.handlebars', ['templates']);
+      // .pipe(templates({errLogToConsole: true}));
+});
 
 
 /**** Default ****/
 
 
-gulp.task('default', ['sass', 'templates', 'express'/*, 'sassWatch', 'templateWatch'*/], function() {
+gulp.task('default', ['sass', 'templates', 'express', 'sassWatch', 'templateWatch'], function() {
 
-  // watch for Sass changes
-  gulp.watch('./stylesheets/*.scss', function() {
-    gulp.run('sass');
-  });
-
-  // watch for Template changes
-  gulp.watch('./templates/*.handlebars', function() {
-    gulp.run('templates');
-  });
+  // // watch for Sass changes
+  // gulp.watch('./stylesheets/*.scss', function() {
+  //   gulp.run('sass');
+  // });
+  //
+  // // watch for Template changes
+  // gulp.watch('./templates/*.handlebars', function() {
+  //   gulp.run('templates');
+  // });
 
 
 });
