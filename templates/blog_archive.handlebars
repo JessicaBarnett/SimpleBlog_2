@@ -1,0 +1,22 @@
+{{#each posts}}
+
+	<section class="post-preview">
+		<section class="post-details">
+			<time datetime="{{formatDate date}}"> {{formatDate date}}</time>
+			<ul class="post-tags">
+				{{#each tags}}
+					<li><a href="#">{{this}}, </a></li>
+				{{/each}}
+			</ul>
+			<a href="blog_pages/{{title}}"> {{comments.length}} comments </a>
+		</section>
+
+		<section class="post-content">
+			<h2 class="post-title">{{title}}</h2>
+			<p class="byline">{{author}}</p>
+			<p>"{{limitTo200 body}}..."</p>
+			<a href="blog_pages/{{title}}">more</a>
+		</section>
+	</section>
+
+{{/each}}
