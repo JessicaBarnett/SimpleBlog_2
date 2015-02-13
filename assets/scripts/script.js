@@ -1,14 +1,13 @@
-var postDataModel = (function(){
+var postDataModel = function(){
   var posts,
       request,
 
-  //returns request for data
   makeRequest = function(){
     return $.get('/data/blogData.json', function(response){
       posts = convertDatesToObjects(response);
     })
     .done(function(response){
-      console.log("success: ", response)
+      console.log("success: ", response);
     })
     .fail(function(error){
       console.log("failure: ", error);
@@ -27,19 +26,13 @@ var postDataModel = (function(){
     return posts;
   },
 
+
+  //****  Public methods ****//
+
   getPromise = function(){
     return request.promise();
   },
 
-  debug = function(){
-    console.log(this);
-    console.log("posts:  ", posts);
-    console.log("request:   ", request);
-  },
-
-  //returns a promise that you can hook callbacks on
-  //to do stuff after data loads.
-  //data will be available
   init = function() {
     request = makeRequest();
     return this; //chainable
@@ -47,36 +40,23 @@ var postDataModel = (function(){
 
   return {
     init : init,
-    getPromise : getPromise,
-    debug : debug
-  }
-})();
+    getPromise : getPromise
+  };
+
+}();
 
 
+/*******  Helpers ********/
 
-/*Possible helpers:
+(function registerHelpers(){
 
-//angular filters:
-// | limitTo(200);
-// | date
-// possibly helpers for sorting, when I get to the archive page
+//takes a post's title and converts it to a url string
+var toUrl = function(postTitle) {
+  return postTitle.replace(/ /g, "_")
+                  .replace(/[\.,-\/#!$%\^&\*;:{}=\-`~()']/g, "")
+                  .toLowerCase();
+};
 
-//custom date fiter
-blogApp.filter('date', function($filter){
-	return function(dateObject){
-		return (dateObject.getMonth()+1)+"/"+dateObject.getDate()+"/"+dateObject.getFullYear();
-	};
-});
-
-//filter to convert post titles into url strings
-blogApp.filter('toUrl', function($filter){
-	return function(postTitle){
-		postTitle = postTitle.replace(/ /g, "_").replace(/[\.,-\/#!$%\^&\*;:{}=\-`~()']/g, "");
-		return postTitle.toLowerCase();
-	};
-});
-
-*/
 //custom date fiter
 var formatDate = function(dateObject){
 	return (dateObject.getMonth()+1)+"/"+dateObject.getDate()+"/"+dateObject.getFullYear();
@@ -84,19 +64,25 @@ var formatDate = function(dateObject){
 
 var limitTo200 = function(text) {
   return text.slice(0, 200);
-}
+};
 
-//curries and returns a handlebars helper
+//curries and returns a function that'll return a month name given a number (0-11)
 var getMonthName = function() {
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   return function(monthNumber){
     return months[monthNumber];
-  }
-}();
+  };
+};
 
 Handlebars.registerHelper('getMonthName', getMonthName);
 Handlebars.registerHelper('limitTo200', limitTo200);
 Handlebars.registerHelper('formatDate', formatDate);
+Handlebars.registerHelper('toUrl', toUrl);
+
+})();
+
+
+//****** Render Templates *******//
 
 function renderTemplates(postsPromise) {
 
@@ -107,11 +93,10 @@ function renderTemplates(postsPromise) {
     $("#archive-list").html(App.templates.blog_archive({'posts': postsData}));
   });
 
-
 }
 
 //starts ajax call
 postDataModel.init();
 
-//document.ready not working.  had to move script to bottom.  : (
+//document.ready not working?  had to move script to bottom...
 $(document).ready(renderTemplates(postDataModel.getPromise()));

@@ -3,7 +3,7 @@ this["App"]["templates"] = this["App"]["templates"] || {};
 this["App"]["templates"]["blog_archive"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, helper, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function", lambda=this.lambda, buffer = "\n	<section class=\"post-preview\">\n		<section class=\"post-details\">\n			<time datetime=\""
     + escapeExpression(((helpers.formatDate || (depth0 && depth0.formatDate) || helperMissing).call(depth0, (depth0 != null ? depth0.date : depth0), {"name":"formatDate","hash":{},"data":data})))
-    + "\"> "
+    + "\">"
     + escapeExpression(((helpers.formatDate || (depth0 && depth0.formatDate) || helperMissing).call(depth0, (depth0 != null ? depth0.date : depth0), {"name":"formatDate","hash":{},"data":data})))
     + "</time>\n			<ul class=\"post-tags\">\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.tags : depth0), {"name":"each","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
@@ -18,8 +18,8 @@ this["App"]["templates"]["blog_archive"] = Handlebars.template({"1":function(dep
     + escapeExpression(((helper = (helper = helpers.author || (depth0 != null ? depth0.author : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"author","hash":{},"data":data}) : helper)))
     + "</p>\n			<p>\""
     + escapeExpression(((helpers.limitTo200 || (depth0 && depth0.limitTo200) || helperMissing).call(depth0, (depth0 != null ? depth0.body : depth0), {"name":"limitTo200","hash":{},"data":data})))
-    + "...\"</p>\n			<a href=\"blog_pages/"
-    + escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"title","hash":{},"data":data}) : helper)))
+    + "...\"</p>\n			<a href=\"blog/"
+    + escapeExpression(((helpers.toUrl || (depth0 && depth0.toUrl) || helperMissing).call(depth0, (depth0 != null ? depth0.title : depth0), {"name":"toUrl","hash":{},"data":data})))
     + "\">more</a>\n		</section>\n	</section>\n\n";
 },"2":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;

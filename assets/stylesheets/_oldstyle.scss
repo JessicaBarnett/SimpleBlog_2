@@ -1,0 +1,240 @@
+@import "vars";
+@import "layout";
+
+
+/***** General ******/
+
+body{
+	@include columns(16);
+	background: url('../images/linedpaper.png');
+	height: 100%;
+	font-size: 100%;
+}
+
+#page-header, #page-footer{
+	@include columns(16);
+	height: 10rem;
+}
+
+
+.blog, article, .searchWrap {
+	background-color: rgba(255, 255, 255, .4);
+	@include columns(13);
+	margin: 0 auto;
+	padding: .5rem 1.5rem;
+}
+
+
+p{
+	margin-top: 1rem;
+}
+
+
+/***** reusable classes *****/
+
+.byline{
+	font-style: italic;
+	margin: 1.5rem 0;
+}
+
+
+/***** Header ******/
+
+
+.main-logo, .main-title-and-nav{
+	float: left;
+}
+
+.main-logo{
+	height: 7rem;
+	margin: 0rem 2rem 0 4rem;
+}
+
+.main-header {
+	@extend %clearfix;
+	padding-top: 3rem;
+}
+
+.main-title{
+	font-size: $page-title-font-size;
+	margin-bottom: 0;
+}
+
+.main-nav li {
+	font-size: $nav-link-font-size;
+	display: inline-block;
+	margin: 1rem 1rem 0 3rem;
+}
+
+/***** Static Articles ******/
+
+.about{
+	font-size: $post-font-size;
+	@include columns(10);
+}
+
+
+/***** Posts ******/
+
+.post-preview {
+	@include columns()
+}
+
+
+
+
+post continer layout
+
+.post-container{ //post container
+	@extend %clearfix;
+	display: block;
+	margin: 2rem 0;
+}
+
+.post-preview, .post-full{
+	font-size: $post-font-size;
+	float: left;
+	margin: 2%;
+
+	.post-title{ //post headings
+		font-size: $post-title-font-size;
+	}
+
+	&.post-content{
+		@include columns(12);
+	}
+
+	&.post-details{
+		font-size: $post-detail-font-size;
+		@include columns(2);
+	}
+
+	.post-tags li {
+		display: inline;
+	}
+}
+
+
+/***** Comments ******/
+
+.comments{
+	font-size: $comment-font-size;
+	@include columns(13);
+	float: right;
+}
+
+.comment, .comment.header, .comment.body{
+	display: block;
+	min-height: 5rem;
+}
+
+.comment{
+	@extend %clearfix;
+	@include columns(16);
+}
+
+.comment.details{
+	font-size: $post-detail-font-size;
+	padding: .5rem .5rem .5rem 0;
+}
+
+.comment.content, .comment.image{
+	float: left;
+	padding: .5rem;
+}
+
+.comment.image{
+	@include columns(3);
+}
+
+.comment.content{
+	@include columns(13);
+}
+
+
+/***** Comment Form *****/
+
+%text-field{
+	font-size: $form-font-size;
+	height: 2.5rem;
+	margin: .5rem;
+	padding: .5rem;
+}
+
+.comment-form{
+	@include columns(16);
+	@extend %text-field;
+}
+
+
+.comment-content{
+	height: 8rem;
+}
+
+.comment-form-submit {
+	@include columns(6);
+	font-size: $post-detail-font-size;
+
+	display: block;
+	border: 0;
+	height: 4rem;
+	margin: 0 auto;
+	background-color: #B0B0B0;
+
+	&:hover{
+		background-color: #D8D8D8;
+	}
+}
+
+
+/***** search Page ******/
+
+.search-wrap{
+	font-size: $post-font-size;
+	@include columns(10);
+}
+
+.search-field{
+	font-size: $post-font-size;
+	@include columns(6);
+	display: block;
+	margin: 2rem auto;
+	height: 3rem;
+	padding: .25rem;
+}
+
+.archive-wrap{
+	@extend %clearfix;
+	@include columns(16);
+}
+
+archive-list, tag-list {
+	display: block;
+	@include columns(5);
+	float: left;
+	margin-left: 16%;
+
+	li:before{
+		content: "";
+		display: block;
+		border: 10px solid black;
+		border-left: none;
+	}
+}
+
+
+/***** Footer ******/
+
+footer{
+	font-size: $post-detail-font-size;
+	margin-top: 2rem;
+	text-align: center;
+}
+
+.social-wrap{
+	@extend %clearfix;
+}
+
+.social {
+	margin: .5rem;
+}

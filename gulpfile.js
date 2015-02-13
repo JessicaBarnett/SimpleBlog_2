@@ -18,22 +18,24 @@ var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
-// var morgan = require('morgan');
 var express = require('express');
+var nodemon = require('gulp-nodemon');
 // var to5 = require('gulp-6to5');
 
 
 /**** Front-end Tasks ****/
 
+var assetDir = './assets/';
+
 gulp.task('sass', function () {
-  gulp.src('./stylesheets/' + 'style.scss')
+  gulp.src(assetDir+'stylesheets/' + 'style.scss')
   .pipe(sass({errLogToConsole: true}))
-  .pipe(gulp.dest('./stylesheets/'));
+  .pipe(gulp.dest(assetDir+'stylesheets/'));
 });
 
 
 gulp.task('templates', function(){
-  gulp.src('./templates/*.handlebars')
+  gulp.src(assetDir+'/templates/*.handlebars')
   .pipe(handlebars())
   .pipe(wrap('Handlebars.template(<%= contents %>)'))
   .pipe(declare({  //this gives the template a name I can access in the js
@@ -41,46 +43,44 @@ gulp.task('templates', function(){
     noRedeclare: true, // Avoid duplicate declarations
   }))
   .pipe(concat('templates.js'))
-  .pipe(gulp.dest('./scripts/'));
+  .pipe(gulp.dest(assetDir+'scripts/'));
 });
-
-
-/**** Back-end tasks ****/
-
-gulp.task('express', function() {
-  var app = express();
-  app.use(express.static(__dirname));
-  app.listen(4000);
-});
-
-// gulp.task('server', function() {
-//   // Start the server at the beginning of the task
-//   server.run({
-//       file: 'server.js'
-//   });
-//
-//   app.use(express.static(__dirname));
-//   app.listen(4000);
-// });
 
 /**** Watch tasks ****/
 
 gulp.task('sassWatch', ['sass'], function() {
-  gulp.watch('stylesheets/*.scss', ['sass']);
+  gulp.watch(assetDir+'stylesheets/*.scss', ['sass']);
       // .pipe(sass({errLogToConsole: true}));
 });
 
 
 gulp.task('templateWatch', ['templates'], function() {
-  gulp.watch('./templates/*.handlebars', ['templates']);
+  gulp.watch(assetDir+'templates/*.handlebars', ['templates']);
       // .pipe(templates({errLogToConsole: true}));
+});
+
+
+/**** Back-end tasks ****/
+
+// gulp.task('express', function() {
+//   var app = express();
+//   app.use(express.static(__dirname));
+//   app.listen(4000);
+// });
+
+gulp.task('server', function() {
+  // Start the server at the beginning of the task
+  nodemon({ script: 'server.js' })
+    .on('restart', function () {
+      console.log('restarted!');
+    });
 });
 
 
 /**** Default ****/
 
 
-gulp.task('default', ['sass', 'templates', 'express', 'sassWatch', 'templateWatch'], function() {
+gulp.task('default', ['sass', 'templates', 'server', /*'express',*/ 'sassWatch', 'templateWatch'], function() {
 
   // // watch for Sass changes
   // gulp.watch('./stylesheets/*.scss', function() {
